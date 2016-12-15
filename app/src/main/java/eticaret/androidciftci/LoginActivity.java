@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import retrofit.client.Response;
 public class LoginActivity extends AppCompatActivity {
     //onCreate
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -28,9 +30,13 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         }*/
 
-        final String Base_Url = "http://192.168.1.8:8000";
+        final String Base_Url = getString(R.string.base_url);
         final Button btnLogin = (Button) findViewById(R.id.btn_login);
         final TextView txtRegister = (TextView) findViewById(R.id.link_register);
+        final TextView txtEmail = (TextView) findViewById(R.id.txtEmail);
+        final TextView txtPassword = (TextView) findViewById(R.id.txtPassword);
+
+        //session
 
         txtRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,35 +50,48 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TextView txtEmail = (TextView) findViewById(R.id.txtEmail);
-                TextView txtPassword = (TextView) findViewById(R.id.txtPassword);
-                RestAdapter restAdapter = new RestAdapter.Builder()
-                        .setEndpoint(Base_Url)
-                        .build();
-                RestInterfaceController restInterfaceController = restAdapter.create(RestInterfaceController.class);
-                restInterfaceController.getJsonValues(txtEmail.getText().toString(), txtPassword.getText().toString(), new Callback<RetrofitLoginModel>() {
-                    @Override
-                    public void success(RetrofitLoginModel retrofitLoginModels, Response response) {
-                        Toast.makeText(getApplicationContext(), "Giris basarili", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(txtEmail.getText()) || TextUtils.isEmpty(txtPassword.getText()))
+                    Toast.makeText(getApplicationContext(), "Email veya Şifre boş olamaz", Toast.LENGTH_LONG).show();
+                else {
+                    RestAdapter restAdapter = new RestAdapter.Builder()
+                            .setEndpoint(Base_Url)
+                            .build();
+                    RestInterfaceController restInterfaceController = restAdapter.create(RestInterfaceController.class);
+                    restInterfaceController.getJsonValues(txtEmail.getText().toString(), txtPassword.getText().toString(), new Callback<RetrofitLoginModel>() {
+                        @Override
+                        public void success(RetrofitLoginModel retrofitLoginModels, Response response) {
+                            if (retrofitLoginModels._case.equals("1")) {// giris basarili
+                                Toast.makeText(getApplicationContext(), "Giris basarili", Toast.LENGTH_LONG).show();
 
-                        SharedPreferences mSharedPrefs = getSharedPreferences("kayitDosyasi", MODE_PRIVATE);
+                                // android lokal token kayit
+                                SharedPreferences mSharedPrefs = getSharedPreferences("kayitDosyasi", MODE_PRIVATE);
+                                SharedPreferences.Editor mPrefsEditor = mSharedPrefs.edit(); //Düzenlemek için acilir
+                                String token = retrofitLoginModels.token; //token adında String bir değişken belirliyoruz
+                                mPrefsEditor.putString("token", token); //keydeger adını vererek veri değişkenindeki değeri dosyaya kaydediyoruz.
+                                mPrefsEditor.putString("email", txtEmail.getText().toString());
+                                mPrefsEditor.commit();//Bu satır düzenlenilen dosyayı kapatmaya yarıyor
 
-                        SharedPreferences.Editor mPrefsEditor = mSharedPrefs.edit(); //Düzenlemek için bu satırı kullanarak dosyayı açıyoruz.
-                        String token = retrofitLoginModels.token; //token adında String bir değişken belirliyoruz
-                        mPrefsEditor.putString("token", token); //keydeger adını vererek veri //değişkenindeki değeri dosyaya kaydediyoruz.
-                        mPrefsEditor.commit();//Bu satır düzenlenilen dosyayı kapatmaya yarıyor
 
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
-                        LoginActivity.this.finish();
-                    }
+                                //yonlendirme
+                                Intent intent = new Intent(getApplicationContext(), UserPanelActivity.class);
+                                startActivity(intent);
+                                Toast.makeText(getApplicationContext(), "Üye girişi başarılı", Toast.LENGTH_LONG).show();
+                                LoginActivity.this.finish();
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-                        Log.e("HATA", error.getLocalizedMessage());
-                    }
-                });
+                            } else {
+                                Toast.makeText(getApplicationContext(), "HATALI GIRIS", Toast.LENGTH_LONG).show();
+                            }
+
+
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                            Log.e("HATA", error.getLocalizedMessage());
+                        }
+                    });
+                }
 
             }
         });

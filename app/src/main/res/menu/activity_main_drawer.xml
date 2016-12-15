@@ -11,9 +11,9 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="Üye Ol" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/nav_urun_ekle"
+            android:icon="@drawable/ic_menu_urun_ekle"
+            android:title="Ürün Ekle" />
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"

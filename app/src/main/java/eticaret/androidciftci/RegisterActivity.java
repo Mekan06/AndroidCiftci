@@ -68,6 +68,10 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
+    private EditText mNameView;
+    private EditText mSurnameView;
+    private EditText mPhoneView;
+
     private View mProgressView;
     private View mLoginFormView;
 
@@ -75,11 +79,26 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        SharedPreferences mSharedPrefs = getSharedPreferences("kayitDosyasi", MODE_PRIVATE);
+        String email = mSharedPrefs.getString("email","N/A");
+        if (!email.isEmpty()){
+            Toast.makeText(getApplicationContext(), "Oturum Açık Üye Olunamaz", Toast.LENGTH_LONG).show();
+
+            Intent intent = new Intent(getApplicationContext(), UserPanelActivity.class);
+            startActivity(intent);
+            RegisterActivity.this.finish();
+        }
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
+        mNameView = (EditText) findViewById(R.id.name);
+        mSurnameView = (EditText) findViewById(R.id.surname);
+        mPhoneView = (EditText) findViewById(R.id.phone);
+
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -158,10 +177,17 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
+        mNameView.setError(null);
+        mSurnameView.setError(null);
+        mPhoneView.setError(null);
+
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
+        String name = mNameView.getText().toString();
+        String surname = mSurnameView.getText().toString();
+        String phone = mPhoneView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -183,6 +209,27 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             focusView = mEmailView;
             cancel = true;
         }
+        else if (TextUtils.isEmpty(password)){
+            mPasswordView.setError(getString(R.string.error_field_required));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+        else if (TextUtils.isEmpty(name)){
+            mNameView.setError(getString(R.string.error_field_required));
+            focusView = mNameView;
+            cancel=true;
+        }
+        else if (TextUtils.isEmpty(surname)){
+            mSurnameView.setError(getString(R.string.error_field_required));
+            focusView = mSurnameView;
+            cancel=true;
+        }
+        else if (TextUtils.isEmpty(phone)){
+            mPhoneView.setError(getString(R.string.error_field_required));
+            focusView = mPhoneView;
+            cancel=true;
+        }
+
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -195,33 +242,31 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
 
-            String Base_Url = "http://192.168.1.8:8000";
-            EditText txtEmail = (EditText) findViewById(R.id.email);
-            EditText txtPassword = (EditText) findViewById(R.id.password);
-            EditText txtName = (EditText) findViewById(R.id.name);
-            EditText txtSurname = (EditText) findViewById(R.id.surname);
-            EditText txtPhone = (EditText) findViewById(R.id.phone);
+            String Base_Url = getString(R.string.base_url);
 
             RestAdapter restAdapter = new RestAdapter.Builder()
                     .setEndpoint(Base_Url)
                     .build();
             RestInterfaceController restInterfaceController = restAdapter.create(RestInterfaceController.class);
-            restInterfaceController.getJsonValues(txtEmail.getText().toString(), txtPassword.getText().toString(), txtName.getText().toString(), txtSurname.getText().toString(), txtPhone.getText().toString(), new Callback<RetrofitRegisterModel>() {
+            restInterfaceController.getJsonValues(mEmailView.getText().toString(), mPasswordView.getText().toString(), mNameView.getText().toString(), mSurnameView.getText().toString(), mPhoneView.getText().toString(), new Callback<RetrofitRegisterModel>() {
                 @Override
                 public void success(RetrofitRegisterModel retrofitRegisterModel, Response response) {
+                    if (retrofitRegisterModel._case.equals("1")){
+                        Toast.makeText(getApplicationContext(), "Kayıt basarili", Toast.LENGTH_LONG).show();
 
-                    Toast.makeText(getApplicationContext(), "Kayıt basarili", Toast.LENGTH_LONG).show();
+                        SharedPreferences mSharedPrefs = getSharedPreferences("kayitDosyasi", MODE_PRIVATE);
+                        SharedPreferences.Editor mPrefsEditor = mSharedPrefs.edit(); //Düzenlemek için bu satırı kullanarak dosyayı açıyoruz.
+                        String token = retrofitRegisterModel.token; //token adında String bir değişken belirliyoruz
+                        mPrefsEditor.putString("token", token); //keydeger adını vererek veri //değişkenindeki değeri dosyaya kaydediyoruz.
+                        mPrefsEditor.commit();//Bu satır düzenlenilen dosyayı kapatmaya yarıyor
 
-                    SharedPreferences mSharedPrefs = getSharedPreferences("kayitDosyasi", MODE_PRIVATE);
-
-                    SharedPreferences.Editor mPrefsEditor = mSharedPrefs.edit(); //Düzenlemek için bu satırı kullanarak dosyayı açıyoruz.
-                    String token = retrofitRegisterModel.token; //token adında String bir değişken belirliyoruz
-                    mPrefsEditor.putString("token", token); //keydeger adını vererek veri //değişkenindeki değeri dosyaya kaydediyoruz.
-                    mPrefsEditor.commit();//Bu satır düzenlenilen dosyayı kapatmaya yarıyor
-
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                    RegisterActivity.this.finish();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                        RegisterActivity.this.finish();
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "Hata: " + retrofitRegisterModel.mesaj, Toast.LENGTH_LONG).show();
+                    }
                 }
 
                 @Override
