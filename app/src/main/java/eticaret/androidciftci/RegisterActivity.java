@@ -36,6 +36,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import eticaret.androidciftci.Controller.RestInterfaceController;
+import eticaret.androidciftci.Model.RetrofitRegisterModel;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -248,7 +250,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
                     .setEndpoint(Base_Url)
                     .build();
             RestInterfaceController restInterfaceController = restAdapter.create(RestInterfaceController.class);
-            restInterfaceController.getJsonValues(mEmailView.getText().toString(), mPasswordView.getText().toString(), mNameView.getText().toString(), mSurnameView.getText().toString(), mPhoneView.getText().toString(), new Callback<RetrofitRegisterModel>() {
+            restInterfaceController.getRegisterJsonValues(mEmailView.getText().toString(), mPasswordView.getText().toString(), mNameView.getText().toString(), mSurnameView.getText().toString(), mPhoneView.getText().toString(), new Callback<RetrofitRegisterModel>() {
                 @Override
                 public void success(RetrofitRegisterModel retrofitRegisterModel, Response response) {
                     if (retrofitRegisterModel._case.equals("1")){

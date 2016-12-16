@@ -11,55 +11,76 @@
     tools:context="eticaret.androidciftci.AddProductActivity">
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
+        android:id="@+id/txtProductName"
+        android:hint="Ürün Adı"
+        android:textAlignment="viewStart"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/txtUrunAdi"
-        android:hint="Ürün Adı" />
+        android:layout_alignParentStart="true" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:layout_below="@+id/txtUrunAdi"
+        android:layout_below="@+id/txtProductName"
         android:layout_alignParentStart="true"
         android:layout_marginTop="16dp"
-        android:id="@+id/txtSehir"
-        android:hint="Şehir" />
+        android:id="@+id/txtCity"
+        android:hint="Şehir"
+        android:textAlignment="viewStart" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         android:ems="10"
         android:layout_marginTop="11dp"
-        android:id="@+id/txtAciklama"
-        android:hint="Açıklama"
-        android:layout_below="@+id/txtSehir"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/txtPrice"
+        android:hint="Fiyat"
+        android:layout_below="@+id/txtCity"
+        android:layout_alignParentStart="true"
+        android:textAlignment="viewStart" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
         android:ems="10"
         android:layout_marginTop="19dp"
-        android:id="@+id/txtStok"
+        android:id="@+id/txtStock"
         android:hint="Stok"
-        android:layout_below="@+id/txtAciklama"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/txtPrice"
+        android:layout_alignParentStart="true"
+        android:textAlignment="viewStart"
+        android:inputType="number" />
 
     <Button
         android:text="Ürün Ekle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="29dp"
-        android:id="@+id/btnUrunEkle"
-        android:layout_below="@+id/txtStok"
+        android:id="@+id/btnAddProduct"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="28dp"
+        android:textSize="18sp"
+        android:layout_below="@+id/txtExplanation"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="24dp" />
+        android:textAlignment="viewStart" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_marginTop="21dp"
+        android:id="@+id/txtExplanation"
+        android:hint="Açıklama"
+        android:textAlignment="viewStart"
+        android:layout_below="@+id/txtStock"
+        android:layout_alignParentStart="true" />
+
+
+
 </RelativeLayout>

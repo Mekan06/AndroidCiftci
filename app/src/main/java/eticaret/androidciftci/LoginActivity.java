@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import eticaret.androidciftci.Controller.RestInterfaceController;
+import eticaret.androidciftci.Model.RetrofitLoginModel;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -57,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                             .setEndpoint(Base_Url)
                             .build();
                     RestInterfaceController restInterfaceController = restAdapter.create(RestInterfaceController.class);
-                    restInterfaceController.getJsonValues(txtEmail.getText().toString(), txtPassword.getText().toString(), new Callback<RetrofitLoginModel>() {
+                    restInterfaceController.getLoginJsonValues(txtEmail.getText().toString(), txtPassword.getText().toString(), new Callback<RetrofitLoginModel>() {
                         @Override
                         public void success(RetrofitLoginModel retrofitLoginModels, Response response) {
                             if (retrofitLoginModels._case.equals("1")) {// giris basarili

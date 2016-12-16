@@ -1,14 +1,12 @@
-package eticaret.androidciftci;
+package eticaret.androidciftci.Model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 /**
- * Created by asus on 23.11.2016.
+ * Created by asus on 24.11.2016.
  */
 
-public class RetrofitLoginModel {
-
+public class RetrofitRegisterModel {
     @SerializedName("case")
     @Expose
     public String _case;
@@ -18,6 +16,4 @@ public class RetrofitLoginModel {
     @SerializedName("token")
     @Expose
     public String token;
-
 }
-
