@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (TextUtils.isEmpty(txtEmail.getText()) || TextUtils.isEmpty(txtPassword.getText()))
-                    Toast.makeText(getApplicationContext(), "Email veya Şifre boş olamaz", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Email veya Şifre boş olamaz", Toast.LENGTH_SHORT).show();
                 else {
                     RestAdapter restAdapter = new RestAdapter.Builder()
                             .setEndpoint(Base_Url)
@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void success(RetrofitLoginModel retrofitLoginModels, Response response) {
                             if (retrofitLoginModels._case.equals("1")) {// giris basarili
-                                Toast.makeText(getApplicationContext(), "Giris basarili", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Giris basarili", Toast.LENGTH_SHORT).show();
 
                                 // android lokal token kayit
                                 SharedPreferences mSharedPrefs = getSharedPreferences("kayitDosyasi", MODE_PRIVATE);
@@ -77,11 +77,11 @@ public class LoginActivity extends AppCompatActivity {
                                 //yonlendirme
                                 Intent intent = new Intent(getApplicationContext(), UserPanelActivity.class);
                                 startActivity(intent);
-                                Toast.makeText(getApplicationContext(), "Üye girişi başarılı", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Üye girişi başarılı", Toast.LENGTH_SHORT).show();
                                 LoginActivity.this.finish();
 
                             } else {
-                                Toast.makeText(getApplicationContext(), "HATALI GIRIS", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "HATALI GIRIS", Toast.LENGTH_SHORT).show();
                             }
 
 
@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         @Override
                         public void failure(RetrofitError error) {
-                            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                             Log.e("HATA", error.getLocalizedMessage());
                         }
                     });

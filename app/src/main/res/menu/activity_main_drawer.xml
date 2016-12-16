@@ -1,36 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_uye_girisi"
-            android:icon="@drawable/ic_menu_camera"
             android:title="Üye Girişi" />
         <item
             android:id="@+id/nav_uye_kayit"
-            android:icon="@drawable/ic_menu_gallery"
             android:title="Üye Ol" />
+
+        <item
+            android:id="@+id/nav_kullanici_paneli"
+            android:title="Kullanıcı Paneli" />
+
         <item
             android:id="@+id/nav_urun_ekle"
-            android:icon="@drawable/ic_menu_urun_ekle"
             android:title="Ürün Ekle" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
-    </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
+        <item
+            android:id="@+id/nav_urun_listele"
+            android:title="Ürünleri Listele" />
+        <item
+            android:id="@+id/nav_cikis_yap"
+            android:title="Çıkış Yap" />
+
+
+    </group>
 
 </menu>
