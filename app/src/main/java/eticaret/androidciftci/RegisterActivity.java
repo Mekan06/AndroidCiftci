@@ -185,7 +185,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
 
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        final String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
         String name = mNameView.getText().toString();
         String surname = mSurnameView.getText().toString();
@@ -260,6 +260,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
                         SharedPreferences.Editor mPrefsEditor = mSharedPrefs.edit(); //Düzenlemek için bu satırı kullanarak dosyayı açıyoruz.
                         String token = retrofitRegisterModel.token; //token adında String bir değişken belirliyoruz
                         mPrefsEditor.putString("token", token); //keydeger adını vererek veri //değişkenindeki değeri dosyaya kaydediyoruz.
+                        mPrefsEditor.putString("email", email);
                         mPrefsEditor.commit();//Bu satır düzenlenilen dosyayı kapatmaya yarıyor
 
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);

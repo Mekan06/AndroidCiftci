@@ -20,8 +20,9 @@ public class UserPanelActivity extends AppCompatActivity {
         final Button btnAddProduct = (Button) findViewById(R.id.btnAddProduct);
 
         SharedPreferences mSharedPrefs = getSharedPreferences("kayitDosyasi", MODE_PRIVATE);
+        String token = mSharedPrefs.getString("token", "N/A");
         String email = mSharedPrefs.getString("email", "N/A");
-        if(email.isEmpty()){
+        if(token.isEmpty()){
             Toast.makeText(getApplicationContext(), "Giriş Yapılmadı", Toast.LENGTH_LONG).show();
             //YÖNLENDİR
         }
