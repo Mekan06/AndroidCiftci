@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity
         m.findItem(R.id.nav_uye_girisi).setEnabled(ziyaretci);
         m.findItem(R.id.nav_uye_kayit).setEnabled(ziyaretci);
 
-        m.findItem(R.id.action_cikis_yap).setEnabled(!ziyaretci);
         m.findItem(R.id.nav_kullanici_paneli).setEnabled(!ziyaretci);
         m.findItem(R.id.nav_urun_ekle).setEnabled(!ziyaretci);
         m.findItem(R.id.nav_urun_listele).setEnabled(!ziyaretci);

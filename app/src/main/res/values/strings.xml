@@ -3,7 +3,7 @@
     <string name="base_url">http://192.168.1.11:8000</string>
     <string name="title_activity_login">Giriş Yap</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
-
+    <string name="action_settings">Ayarlar</string>
     <string name="title_activity_main">Çiftçi</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
