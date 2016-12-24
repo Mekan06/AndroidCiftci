@@ -5,24 +5,12 @@ package eticaret.androidciftci.Model;
  */
 
 public class Urunler {
-    public Urunler(){
-
-    }
-    public Urunler(String id, String uyeEmail, String aciklama, String fiyat, String stok, String urunAdi) {
-        this.id = id;
-        this.uyeEmail = uyeEmail;
-        this.aciklama = aciklama;
-        this.fiyat = fiyat;
-        this.stok = stok;
-        this.urunAdi = urunAdi;
-    }
-
     private String id;
-    private String uyeEmail;
+    private String uye_email;
     private String aciklama;
     private String fiyat;
     private String stok;
-    private String urunAdi;
+    private String urun_adi;
 
     public String getId() {
         return id;
@@ -33,11 +21,11 @@ public class Urunler {
     }
 
     public String getUyeEmail() {
-        return uyeEmail;
+        return uye_email;
     }
 
     public void setUyeEmail(String uyeEmail) {
-        this.uyeEmail = uyeEmail;
+        this.uye_email = uyeEmail;
     }
 
     public String getAciklama() {
@@ -65,10 +53,10 @@ public class Urunler {
     }
 
     public String getUrunAdi() {
-        return urunAdi;
+        return urun_adi;
     }
 
     public void setUrunAdi(String urunAdi) {
-        this.urunAdi = urunAdi;
+        this.urun_adi = urunAdi;
     }
 }

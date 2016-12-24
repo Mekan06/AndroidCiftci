@@ -27,10 +27,7 @@ public interface RestInterfaceController {
     @GET("/api/addProduct?")
     void getAddProductsJsonValues(@Query("uyeEmail") String uyeEmail, @Query("urunAdi") String urunAdi, @Query("sehir") String sehir, @Query("aciklama") String aciklama, @Query("fiyat") String fiyat, @Query("stok") String stok, @Query("token") String token, Callback<RetrofitAddProductModel> response);
 
-    @Headers({
-            "Accept: application/vnd.github.v3.full+json",
-            "User-Agent: Retrofit-Sample-App"
-    })
+    @Headers("Content-type: application/json")
     @GET("/api/userPanel?")
     void getUserPanelJsonValues(@Query("token") String token, Callback<RetrofitUserPanelModel> response);
 }
