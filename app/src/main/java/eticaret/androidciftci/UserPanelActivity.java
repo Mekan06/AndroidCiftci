@@ -2,6 +2,7 @@ package eticaret.androidciftci;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,11 +10,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,12 +22,9 @@ import eticaret.androidciftci.Controller.RestInterfaceController;
 import eticaret.androidciftci.Model.RetrofitUserPanelModel;
 import eticaret.androidciftci.Model.Urunler;
 import retrofit.Callback;
-import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.converter.Converter;
-import retrofit.http.Headers;
 
 public class UserPanelActivity extends AppCompatActivity {
 
@@ -47,17 +45,13 @@ public class UserPanelActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
+    protected void onStart(){
         super.onStart();
+
         final TextView txtEmail = (TextView) findViewById(R.id.lblEmail);
-        final TextView txtProductName = (TextView) findViewById(R.id.txtProductName);
-        final TextView txtStock = (TextView) findViewById(R.id.txtStock);
-        final TextView txtExplanation = (TextView) findViewById(R.id.txtExplanation);
-        final TextView txtPrice = (TextView) findViewById(R.id.txtPrice);
-        final Button btnList = (Button) findViewById(R.id.btnList);
-        final Spinner sp = (Spinner) findViewById(R.id.spinnerProducts);
         final ArrayAdapter<String> adapter;
         final List<String> urunAdlari = new ArrayList<String>();
+        final ListView listViewUrunler = (ListView) findViewById(R.id.listViewProducts);
 
         SharedPreferences mSharedPrefs = getSharedPreferences("kayitDosyasi", MODE_PRIVATE);
         String token = mSharedPrefs.getString("token", "N/A");
@@ -67,12 +61,6 @@ public class UserPanelActivity extends AppCompatActivity {
 
             String Base_Url = getString(R.string.base_url);
             RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setRequestInterceptor(new RequestInterceptor() {
-                        @Override
-                        public void intercept(RequestFacade request) {
-                            request.addHeader("Accept", "application/json;versions=1");
-                        }
-                    })
                     .setEndpoint(Base_Url)
                     .build();
 
@@ -85,17 +73,8 @@ public class UserPanelActivity extends AppCompatActivity {
                         for (Urunler urn : listUrunler) {
                             urunAdlari.add(urn.getUrunAdi().toString());
                         }
-                        btnList.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                int id = (int) sp.getSelectedItemId();
-                                Urunler urun = retrofitUserPanelModel.urunler.get(id);
-                                txtProductName.setText(urun.getUrunAdi());
-                                txtStock.setText(urun.getStok());
-                                txtExplanation.setText(urun.getAciklama());
-                                txtPrice.setText(urun.getFiyat());
-                            }
-                        });
+                        ArrayAdapter<String> veriAdaptoru = new ArrayAdapter<String>(UserPanelActivity.this, android.R.layout.simple_list_item_1, android.R.id.text1, urunAdlari);
+                        listViewUrunler.setAdapter(veriAdaptoru);
                     } else {
                         Toast.makeText(getApplicationContext(), retrofitUserPanelModel.mesaj, Toast.LENGTH_SHORT);
                     }
@@ -108,13 +87,12 @@ public class UserPanelActivity extends AppCompatActivity {
                 }
             });
 
-            adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, urunAdlari);
-            sp.setAdapter(adapter);
-
 
         } else {
-            Toast.makeText(getApplicationContext(), "Giriş Yapılmadı", Toast.LENGTH_LONG).show();
-            //YÖNLENDİR
+            Toast.makeText(getApplicationContext(), "Giriş Yapılmadı", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            UserPanelActivity.this.finish();
         }
     }
 }

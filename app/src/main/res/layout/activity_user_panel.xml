@@ -39,111 +39,13 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="21dp" />
 
-    <Spinner
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="33dp"
-        android:id="@+id/spinnerProducts"
+        android:layout_height="match_parent"
         android:layout_below="@+id/btnAddProduct"
-        android:elevation="1dp"
         android:layout_alignParentStart="true"
-        android:drawSelectorOnTop="true"
-        android:addStatesFromChildren="false" />
+        android:layout_marginTop="25dp"
+        android:id="@+id/listViewProducts" />
 
-    <TextView
-        android:text="Ürün Adı: "
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/spinnerProducts"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="108dp"
-        android:id="@+id/textView2"
-        android:textAlignment="textStart"
-        android:textSize="18sp" />
-
-    <TextView
-        android:text="Açıklama: "
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView5"
-        android:layout_below="@+id/textView4"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="18dp"
-        android:textAlignment="textStart"
-        android:textSize="18sp" />
-
-    <TextView
-        android:text="Fiyat: "
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        android:layout_marginTop="18dp"
-        android:textAlignment="textStart"
-        android:textSize="18sp"
-        android:layout_below="@+id/textView5"
-        android:layout_alignEnd="@+id/textView2" />
-
-    <TextView
-        android:text="Stok: "
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
-        android:id="@+id/textView4"
-        android:textAlignment="textStart"
-        android:textSize="18sp"
-        android:layout_below="@+id/textView2"
-        android:layout_alignEnd="@+id/textView2" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtProductName"
-        android:textAlignment="textStart"
-        android:textSize="18sp"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_toEndOf="@+id/textView5"
-        android:text="-" />
-
-    <TextView
-        android:text="-"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtStock"
-        android:textAlignment="textStart"
-        android:textSize="18sp"
-        android:layout_above="@+id/textView5"
-        android:layout_toEndOf="@+id/textView5" />
-
-    <TextView
-        android:text="-"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtExplanation"
-        android:textAlignment="textStart"
-        android:textSize="18sp"
-        android:layout_alignBaseline="@+id/textView5"
-        android:layout_alignBottom="@+id/textView5"
-        android:layout_toEndOf="@+id/textView5" />
-
-    <TextView
-        android:text="-"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtPrice"
-        android:textAlignment="textStart"
-        android:textSize="18sp"
-        android:layout_alignBaseline="@+id/textView"
-        android:layout_alignBottom="@+id/textView"
-        android:layout_toEndOf="@+id/textView5" />
-
-    <Button
-        android:text="Listele"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/spinnerProducts"
-        android:layout_alignEnd="@+id/btnAddProduct"
-        android:layout_marginTop="15dp"
-        android:id="@+id/btnList" />
 
 </RelativeLayout>
