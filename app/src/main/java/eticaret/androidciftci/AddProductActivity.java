@@ -42,6 +42,13 @@ public class AddProductActivity extends AppCompatActivity {
         final EditText txtExplanation = (EditText) findViewById(R.id.txtExplanation);
         Button btnAddProduct = (Button) findViewById(R.id.btnAddProduct);
 
+        Intent intent = getIntent();
+        txtProductName.setText(intent.getStringExtra("productName"));
+        txtCity.setText(intent.getStringExtra("city"));
+        txtPrice.setText(intent.getStringExtra("price"));
+        txtStock.setText(intent.getStringExtra("stock"));
+        txtExplanation.setText(intent.getStringExtra("explanation"));
+
         btnAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

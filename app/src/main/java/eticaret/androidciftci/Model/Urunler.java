@@ -11,6 +11,7 @@ public class Urunler {
     private String fiyat;
     private String stok;
     private String urun_adi;
+    private String sehir;
 
     public String getId() {
         return id;
@@ -58,5 +59,13 @@ public class Urunler {
 
     public void setUrunAdi(String urunAdi) {
         this.urun_adi = urunAdi;
+    }
+
+    public String getSehir() {
+        return sehir;
+    }
+
+    public void setSehir(String sehir) {
+        this.sehir = sehir;
     }
 }

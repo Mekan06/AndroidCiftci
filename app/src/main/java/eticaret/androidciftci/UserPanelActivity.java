@@ -69,12 +69,25 @@ public class UserPanelActivity extends AppCompatActivity {
                 @Override
                 public void success(final RetrofitUserPanelModel retrofitUserPanelModel, Response response) {
                     if (retrofitUserPanelModel._case.equals("1")) {
-                        List<Urunler> listUrunler = retrofitUserPanelModel.urunler;
+                        final List<Urunler> listUrunler = retrofitUserPanelModel.urunler;
                         for (Urunler urn : listUrunler) {
                             urunAdlari.add(urn.getUrunAdi().toString());
                         }
                         ArrayAdapter<String> veriAdaptoru = new ArrayAdapter<String>(UserPanelActivity.this, android.R.layout.simple_list_item_1, android.R.id.text1, urunAdlari);
                         listViewUrunler.setAdapter(veriAdaptoru);
+                        listViewUrunler.setOnItemClickListener(new AdapterView.OnItemClickListener() { //add_product sayfasına gidecek
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Log.e("TEST", listUrunler.get(position).getUrunAdi());
+                                Intent myIntent = new Intent(getApplicationContext(), AddProductActivity.class);
+                                myIntent.putExtra("productName", listUrunler.get(position).getUrunAdi());
+                                myIntent.putExtra("city", listUrunler.get(position).getSehir());
+                                myIntent.putExtra("price", listUrunler.get(position).getFiyat());
+                                myIntent.putExtra("stock", listUrunler.get(position).getStok());
+                                myIntent.putExtra("explanation", listUrunler.get(position).getAciklama());
+                                startActivity(myIntent);
+                            }
+                        });
                     } else {
                         Toast.makeText(getApplicationContext(), retrofitUserPanelModel.mesaj, Toast.LENGTH_SHORT);
                     }

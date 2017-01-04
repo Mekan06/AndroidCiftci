@@ -19,7 +19,7 @@
         android:hint="Ürün Adı"
         android:textAlignment="viewStart"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignStart="@+id/txtCity" />
 
     <EditText
         android:layout_width="match_parent"
@@ -27,11 +27,11 @@
         android:inputType="textPersonName"
         android:ems="10"
         android:layout_below="@+id/txtProductName"
-        android:layout_alignParentStart="true"
         android:layout_marginTop="16dp"
         android:id="@+id/txtCity"
         android:hint="Şehir"
-        android:textAlignment="viewStart" />
+        android:textAlignment="viewStart"
+        android:layout_alignStart="@+id/btnAddProduct" />
 
     <EditText
         android:layout_width="match_parent"
@@ -42,8 +42,8 @@
         android:id="@+id/txtPrice"
         android:hint="Fiyat"
         android:layout_below="@+id/txtCity"
-        android:layout_alignParentStart="true"
-        android:textAlignment="viewStart" />
+        android:textAlignment="viewStart"
+        android:layout_alignStart="@+id/txtCity" />
 
     <EditText
         android:layout_width="match_parent"
@@ -53,21 +53,9 @@
         android:id="@+id/txtStock"
         android:hint="Stok"
         android:layout_below="@+id/txtPrice"
-        android:layout_alignParentStart="true"
         android:textAlignment="viewStart"
-        android:inputType="number" />
-
-    <Button
-        android:text="Ürün Ekle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnAddProduct"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="28dp"
-        android:textSize="18sp"
-        android:layout_below="@+id/txtExplanation"
-        android:layout_alignParentStart="true"
-        android:textAlignment="viewStart" />
+        android:inputType="number"
+        android:layout_alignStart="@+id/txtPrice" />
 
     <EditText
         android:layout_width="match_parent"
@@ -79,8 +67,18 @@
         android:hint="Açıklama"
         android:textAlignment="viewStart"
         android:layout_below="@+id/txtStock"
-        android:layout_alignParentStart="true" />
+        android:layout_alignStart="@+id/txtStock" />
 
+    <Button
+        android:text="Ürün Ekle / Güncelle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnAddProduct"
+        android:layout_marginTop="27dp"
+        android:textSize="18sp"
+        android:textAlignment="viewStart"
+        android:layout_below="@+id/txtExplanation"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>
