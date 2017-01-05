@@ -32,6 +32,8 @@ public class UserPanelActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_panel);
+        setTitle("Kullanıcı Ekranı");
+
         final Button btnAddProduct = (Button) findViewById(R.id.btnAddProduct);
 
         btnAddProduct.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +80,6 @@ public class UserPanelActivity extends AppCompatActivity {
                         listViewUrunler.setOnItemClickListener(new AdapterView.OnItemClickListener() { //add_product sayfasına gidecek
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                Log.e("TEST", listUrunler.get(position).getUrunAdi());
                                 Intent myIntent = new Intent(getApplicationContext(), AddProductActivity.class);
                                 myIntent.putExtra("productName", listUrunler.get(position).getUrunAdi());
                                 myIntent.putExtra("city", listUrunler.get(position).getSehir());

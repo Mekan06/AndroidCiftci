@@ -59,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
      */
-    private static final String[] DUMMY_CREDENTIALS =  new String[]{
+    private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
     };
     /**
@@ -81,10 +81,11 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        setTitle("Üye Kayıt Ekranı");
 
         SharedPreferences mSharedPrefs = getSharedPreferences("kayitDosyasi", MODE_PRIVATE);
-        String email = mSharedPrefs.getString("email","N/A");
-        if (!email.isEmpty()){
+        String email = mSharedPrefs.getString("email", "N/A");
+        if (!email.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Oturum Açık Üye Olunamaz", Toast.LENGTH_LONG).show();
 
             Intent intent = new Intent(getApplicationContext(), UserPanelActivity.class);
@@ -210,26 +211,22 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
-        }
-        else if (TextUtils.isEmpty(password)){
+        } else if (TextUtils.isEmpty(password)) {
             mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancel = true;
-        }
-        else if (TextUtils.isEmpty(name)){
+        } else if (TextUtils.isEmpty(name)) {
             mNameView.setError(getString(R.string.error_field_required));
             focusView = mNameView;
-            cancel=true;
-        }
-        else if (TextUtils.isEmpty(surname)){
+            cancel = true;
+        } else if (TextUtils.isEmpty(surname)) {
             mSurnameView.setError(getString(R.string.error_field_required));
             focusView = mSurnameView;
-            cancel=true;
-        }
-        else if (TextUtils.isEmpty(phone)){
+            cancel = true;
+        } else if (TextUtils.isEmpty(phone)) {
             mPhoneView.setError(getString(R.string.error_field_required));
             focusView = mPhoneView;
-            cancel=true;
+            cancel = true;
         }
 
 
@@ -253,7 +250,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             restInterfaceController.getRegisterJsonValues(mEmailView.getText().toString(), mPasswordView.getText().toString(), mNameView.getText().toString(), mSurnameView.getText().toString(), mPhoneView.getText().toString(), new Callback<RetrofitRegisterModel>() {
                 @Override
                 public void success(RetrofitRegisterModel retrofitRegisterModel, Response response) {
-                    if (retrofitRegisterModel._case.equals("1")){
+                    if (retrofitRegisterModel._case.equals("1")) {
                         Toast.makeText(getApplicationContext(), "Kayıt basarili", Toast.LENGTH_LONG).show();
 
                         SharedPreferences mSharedPrefs = getSharedPreferences("kayitDosyasi", MODE_PRIVATE);
@@ -266,8 +263,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
                         RegisterActivity.this.finish();
-                    }
-                    else{
+                    } else {
                         Toast.makeText(getApplicationContext(), "Hata: " + retrofitRegisterModel.mesaj, Toast.LENGTH_LONG).show();
                     }
                 }

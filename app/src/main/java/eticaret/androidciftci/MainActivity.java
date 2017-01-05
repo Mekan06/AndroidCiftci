@@ -1,5 +1,6 @@
 package eticaret.androidciftci;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,10 +8,29 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import eticaret.androidciftci.Controller.RestInterfaceController;
+import eticaret.androidciftci.Model.RetrofitMainPanelModel;
+import eticaret.androidciftci.Model.RetrofitUserPanelModel;
+import eticaret.androidciftci.Model.Urunler;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -19,6 +39,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("Ana Ekran");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -51,6 +72,90 @@ public class MainActivity extends AppCompatActivity
         m.findItem(R.id.nav_urun_ekle).setEnabled(!ziyaretci);
         m.findItem(R.id.nav_urun_listele).setEnabled(!ziyaretci);
         m.findItem(R.id.nav_cikis_yap).setEnabled(!ziyaretci);
+
+        //Ürünlerin Listelenmesi
+        final List<String> urunAdlari = new ArrayList<String>();
+        final ListView listViewUrunler = (ListView) findViewById(R.id.listViewProducts);
+
+        String Base_Url = getString(R.string.base_url);
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(Base_Url)
+                .build();
+
+        RestInterfaceController restInterfaceController = restAdapter.create(RestInterfaceController.class);
+        restInterfaceController.getMainPanelJsonValues(new Callback<RetrofitMainPanelModel>() {
+            @Override
+            public void success(final RetrofitMainPanelModel retrofitMainPanelModel, Response response) {
+                if (retrofitMainPanelModel._case.equals("1")) {
+                    final List<Urunler> listUrunler = retrofitMainPanelModel.urunler;
+                    for (Urunler urn : listUrunler) {
+                        urunAdlari.add(urn.getUrunAdi().toString() + "   -   " + urn.getUyeEmail().toString() + " - " + urn.getSehir().toString());
+                    }
+                    ArrayAdapter<String> veriAdaptoru = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, android.R.id.text1, urunAdlari);
+                    listViewUrunler.setAdapter(veriAdaptoru);
+                    listViewUrunler.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            final String uyeEmail = listUrunler.get(position).getUyeEmail();
+                            final String urunAdi = listUrunler.get(position).getUrunAdi();
+                            final String sehir = listUrunler.get(position).getSehir();
+                            final String fiyat = listUrunler.get(position).getFiyat();
+                            final String stok = listUrunler.get(position).getStok();
+                            final String aciklama = listUrunler.get(position).getAciklama();
+
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (!isFinishing()) {
+                                        new AlertDialog.Builder(MainActivity.this)
+                                                .setTitle("Seçilen Ürün")
+                                                .setMessage("Ürün sahibi: " + uyeEmail + "\n" +
+                                                        "Ürün adı: " + urunAdi + "\n" +
+                                                        "Şehir: " + sehir + "\n" +
+                                                        "Fiyat: " + fiyat + "tl\n" +
+                                                        "Stok: " + stok + "\n" +
+                                                        "Açıklama: " + aciklama)
+                                                .setCancelable(false)
+                                                .setPositiveButton("Tamam", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+
+                                                    }
+                                                }).show();
+                                    }
+                                }
+                            });
+/*
+                            new AlertDialog.Builder(getApplicationContext())
+                                    .setTitle("Delete entry")
+                                    .setMessage("Are you sure you want to delete this entry?")
+                                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // continue with delete
+                                        }
+                                    })
+                                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // do nothing
+                                        }
+                                    })
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .show();*/
+                        }
+                    });
+                } else {
+                    Toast.makeText(getApplicationContext(), retrofitMainPanelModel.mesaj, Toast.LENGTH_SHORT);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(getApplicationContext(), "hata olustu: " + error.getMessage(), Toast.LENGTH_LONG).show();
+                Log.e("ERROR", error.getMessage());
+            }
+        });
+
     }
 
     @Override

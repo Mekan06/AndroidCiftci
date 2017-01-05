@@ -26,6 +26,7 @@ public class AddProductActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product);
+        setTitle("Ürün Ekleme Ekranı");
 
         //token kontrol
         SharedPreferences mSharedPrefs = getSharedPreferences("kayitDosyasi", MODE_PRIVATE);
@@ -41,6 +42,7 @@ public class AddProductActivity extends AppCompatActivity {
         final EditText txtStock = (EditText) findViewById(R.id.txtStock);
         final EditText txtExplanation = (EditText) findViewById(R.id.txtExplanation);
         Button btnAddProduct = (Button) findViewById(R.id.btnAddProduct);
+        Button btnDeleteProduct = (Button) findViewById(R.id.btnDeleteProduct);
 
         Intent intent = getIntent();
         txtProductName.setText(intent.getStringExtra("productName"));
@@ -49,6 +51,15 @@ public class AddProductActivity extends AppCompatActivity {
         txtStock.setText(intent.getStringExtra("stock"));
         txtExplanation.setText(intent.getStringExtra("explanation"));
 
+        //Ürün silme butonu ve işlemleri
+        btnDeleteProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //ürün silme özelliği eklenecek
+            }
+        });
+
+        // Ürün ekleme Butonu ve işlemleri
         btnAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

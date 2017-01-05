@@ -2,6 +2,7 @@ package eticaret.androidciftci.Controller;
 
 import eticaret.androidciftci.Model.RetrofitAddProductModel;
 import eticaret.androidciftci.Model.RetrofitLoginModel;
+import eticaret.androidciftci.Model.RetrofitMainPanelModel;
 import eticaret.androidciftci.Model.RetrofitRegisterModel;
 import eticaret.androidciftci.Model.RetrofitUserPanelModel;
 import retrofit.Callback;
@@ -30,4 +31,7 @@ public interface RestInterfaceController {
     @Headers("Content-type: application/json")
     @GET("/api/userPanel?")
     void getUserPanelJsonValues(@Query("token") String token, Callback<RetrofitUserPanelModel> response);
+
+    @GET("/api/mainPanel?")
+    void getMainPanelJsonValues(Callback<RetrofitMainPanelModel> response);
 }
