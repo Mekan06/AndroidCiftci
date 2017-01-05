@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity
                 if (retrofitMainPanelModel._case.equals("1")) {
                     final List<Urunler> listUrunler = retrofitMainPanelModel.urunler;
                     for (Urunler urn : listUrunler) {
-                        urunAdlari.add(urn.getUrunAdi().toString() + "   -   " + urn.getUyeEmail().toString() + " - " + urn.getSehir().toString());
+                        urunAdlari.add(urn.getUrunAdi() + "   -   " + urn.getUyeEmail() + " - " + urn.getSehir());
                     }
                     ArrayAdapter<String> veriAdaptoru = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, android.R.id.text1, urunAdlari);
                     listViewUrunler.setAdapter(veriAdaptoru);
