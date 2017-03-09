@@ -1,6 +1,7 @@
 package eticaret.androidciftci.Controller;
 
 import eticaret.androidciftci.Model.RetrofitAddProductModel;
+import eticaret.androidciftci.Model.RetrofitIletisimModel;
 import eticaret.androidciftci.Model.RetrofitLoginModel;
 import eticaret.androidciftci.Model.RetrofitMainPanelModel;
 import eticaret.androidciftci.Model.RetrofitRegisterModel;
@@ -34,4 +35,7 @@ public interface RestInterfaceController {
 
     @GET("/api/mainPanel?")
     void getMainPanelJsonValues(Callback<RetrofitMainPanelModel> response);
+
+    @GET("/api/iletisim?")
+    void getIletisimJsonValues(@Query("ad") String ad, @Query("soyad") String soyad, @Query("mesaj") String mesaj, Callback<RetrofitIletisimModel> response);
 }

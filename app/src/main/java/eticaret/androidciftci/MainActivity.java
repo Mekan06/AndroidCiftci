@@ -114,9 +114,9 @@ public class MainActivity extends AppCompatActivity
                                                         "Ürün adı: " + urunAdi + "\n" +
                                                         "Şehir: " + sehir + "\n" +
                                                         "Fiyat: " + fiyat + "tl\n" +
-                                                        "Stok: " + stok + "\n" +
+                                                        "Stok: " + stok + "kg\n" +
                                                         "Açıklama: " + aciklama)
-                                                .setCancelable(false)
+                                                .setCancelable(true)
                                                 .setPositiveButton("Tamam", new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int which) {
@@ -126,22 +126,6 @@ public class MainActivity extends AppCompatActivity
                                     }
                                 }
                             });
-/*
-                            new AlertDialog.Builder(getApplicationContext())
-                                    .setTitle("Delete entry")
-                                    .setMessage("Are you sure you want to delete this entry?")
-                                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            // continue with delete
-                                        }
-                                    })
-                                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            // do nothing
-                                        }
-                                    })
-                                    .setIcon(android.R.drawable.ic_dialog_alert)
-                                    .show();*/
                         }
                     });
                 } else {
@@ -207,7 +191,12 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(getApplicationContext(), AddProductActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_kullanici_paneli) {
+        }
+        else if(id==R.id.nav_urun_listele){
+            Intent intent = new Intent(getApplicationContext(), iletisim.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.nav_kullanici_paneli) {
             Intent intent = new Intent(getApplicationContext(), UserPanelActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_cikis_yap) {
